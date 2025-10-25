@@ -15,10 +15,6 @@ BUILD_SUBDIRS = $(SRC_SUBDIRS:$(SRC_DIR)%=$(BUILD_DIR)%)
 
 all: build
 
-restart: rebuild
-	@echo "\nRunning cryptool..."
-	./$(TARGET) --help
-
 build: create_dirs $(TARGET)
 
 create_dirs:
@@ -34,17 +30,6 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 rebuild: clean build
-
-run: build
-	./$(TARGET)
-
-help:
-	@echo "Available targets:"
-	@echo "  build   - Build the cryptool utility"
-	@echo "  clean   - Remove build files"
-	@echo "  rebuild - Clean and rebuild"
-	@echo "  run     - Build and run the program"
-	@echo "  restart - Clean, rebuild and run with --help"
 
 install:
 	sudo cp $(TARGET) /usr/local/bin/cryptool
