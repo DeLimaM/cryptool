@@ -1,9 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cryptool.h"
 #include "args_parser.h"
+#include "encoder.h"
+#include "encodings/registry.h"
 
 int main(int argc, char *argv[])
 {
+    registry_init();
+
     ParsedArgs args = args_parse(argc, argv);
 
     if (args.show_help)
@@ -25,14 +30,20 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    if (args.verbose)
+    char *result = encoder_process(&args);
+
+    if (!result)
     {
-        printf("Input string: %s\n", args.input);
-        printf("Operating mode: %s\n", args.mode == MODE_ENCRYPT ? "Encrypt" : "Decrypt");
-        printf("Encoding type: %s\n",
-               args.encoding == BASE_64 ? "Base64" : args.encoding == HEX ? "Hex"
-                                                                          : "UU");
+        fprintf(stderr, "\n[ERROR] Operation failed!\n");
+        return 1;
     }
+
+    if (!args.verbose)
+    {
+        printf("%s\n", result);
+    }
+
+    free(result);
 
     return 0;
 }
