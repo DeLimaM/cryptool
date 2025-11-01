@@ -35,15 +35,46 @@ int main(int argc, char *argv[])
     if (!result)
     {
         fprintf(stderr, "\n[ERROR] Operation failed!\n");
+        if (args.is_file_input && args.input)
+        {
+            free(args.input);
+        }
         return 1;
     }
 
-    if (!args.verbose)
+    if (args.output_file)
     {
-        printf("%s\n", result);
+        FILE *output = fopen(args.output_file, "w");
+        if (!output)
+        {
+            fprintf(stderr, "Error: Cannot open output file '%s' for writing\n", args.output_file);
+            free(result);
+            if (args.is_file_input && args.input)
+            {
+                free(args.input);
+            }
+            return 1;
+        }
+
+        fprintf(output, "%s\n", result);
+        fclose(output);
+
+        printf("Output written to: %s\n", args.output_file);
+    }
+    else
+    {
+        if (!args.verbose)
+        {
+            printf("%s\n", result);
+        }
     }
 
     free(result);
+
+    if (args.is_file_input && args.input)
+    {
+        free(args.input);
+    }
 
     return 0;
 }
