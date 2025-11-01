@@ -63,10 +63,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        if (!args.verbose)
-        {
-            printf("%s\n", result);
-        }
+        printf("%s\n", result);
     }
 
     free(result);

@@ -10,8 +10,7 @@ typedef enum
 typedef enum
 {
     BASE_64,
-    HEX,
-    UU
+    HEX
 } EncodingType;
 
 #endif // CRYPTOOL_H

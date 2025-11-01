@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "registry.h"
 #include "base64.h"
+#include "hex.h"
 
 static Encoding encodings[3];
 static int initialized = 0;
@@ -18,6 +19,11 @@ void registry_init(void)
         .description = "Base64 encoding",
         .encode = base64_encode,
         .decode = base64_decode};
+    encodings[1] = (Encoding){
+        .name = "HEX",
+        .description = "Hexadecimal encoding",
+        .encode = hex_encode,
+        .decode = hex_decode};
 
     initialized = 1;
 }
@@ -35,8 +41,6 @@ const Encoding *registry_get_encoding(EncodingType type)
         return &encodings[0];
     case HEX:
         return &encodings[1];
-    case UU:
-        return &encodings[2];
     default:
         return NULL;
     }

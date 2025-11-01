@@ -96,7 +96,6 @@ char *encoder_process(const ParsedArgs *args)
         verbose_printf("\n[VERBOSE] %s complete!\n",
                        args->mode == MODE_ENCRYPT ? "Encoding" : "Decoding");
         verbose_printf("[VERBOSE] Output length: %zu bytes\n", strlen(result));
-        verbose_printf("[VERBOSE] Output string: \"%s\"\n", result);
     }
 
     return result;
